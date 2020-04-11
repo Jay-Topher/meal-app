@@ -21,9 +21,11 @@ function MealsNavigator() {
           options={{
             title: "Meal Categories",
             headerStyle: {
-              backgroundColor: Colors.primaryColor,
+              backgroundColor:
+                Platform.OS === "android" ? Colors.primaryColor : "#fff",
             },
-            headerTintColor: "#fff",
+            headerTintColor:
+              Platform.OS === "ios" ? Colors.primaryColor : "#fff",
           }}
         />
         <Stack.Screen name="CategoryMeals" component={CategoryMealsScreen} />
