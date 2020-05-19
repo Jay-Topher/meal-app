@@ -15,18 +15,20 @@ const Stack = createStackNavigator();
 function MealsNavigator() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor:
+              Platform.OS === "android" ? Colors.primaryColor : "#fff",
+          },
+          headerTintColor: Platform.OS === "ios" ? Colors.primaryColor : "#fff",
+        }}
+      >
         <Stack.Screen
           name="Home"
           component={CategoriesScreen}
           options={{
             title: CategoriesScreen.title,
-            headerStyle: {
-              backgroundColor:
-                Platform.OS === "android" ? Colors.primaryColor : "#fff",
-            },
-            headerTintColor:
-              Platform.OS === "ios" ? Colors.primaryColor : "#fff",
           }}
         />
         <Stack.Screen
