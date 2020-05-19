@@ -2,20 +2,22 @@ import React from "react";
 import {
   View,
   Text,
-  Button,
   StyleSheet,
   FlatList,
   TouchableOpacity,
 } from "react-native";
 import { CATEGORIES } from "../data/dummy-data";
-import Colors from "../constants/Colors";
 
 const CategoriesScreen = (props) => {
   const renderGridItem = (itemData) => {
     return (
       <TouchableOpacity
         style={styles.gridItem}
-        onPress={() => props.navigation.navigate("CategoryMeals")}
+        onPress={() =>
+          props.navigation.navigate("CategoryMeals", {
+            categoryId: itemData.item.id,
+          })
+        }
       >
         <View>
           <Text>{itemData.item.title}</Text>
@@ -33,6 +35,7 @@ const CategoriesScreen = (props) => {
   );
 };
 
+CategoriesScreen.title = "Meal Categories";
 // deprecated
 // CategoriesScreen.navigationOptions = {
 //   headerTitle: "Meal Categories",
