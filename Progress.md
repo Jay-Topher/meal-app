@@ -1,3 +1,3 @@
-**Module 6 Video 22**
+**Module 6 Video 23**
 
-- not completed 22
+- completed 23
