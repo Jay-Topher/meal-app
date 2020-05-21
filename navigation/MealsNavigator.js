@@ -3,6 +3,8 @@ import { Platform } from "react-native";
 import "react-native-gesture-handler";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import HeaderButton from "../components/HeaderButton";
 
 import CategoriesScreen from "../screens/CategoriesScreen";
 import CategoryMealsScreen from "../screens/CategoryMealsScreen";
@@ -59,6 +61,15 @@ function MealsNavigator() {
 
             return {
               title: selectedMeal.title,
+              headerRight: () => (
+                <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                  <Item
+                    title="Favorite"
+                    iconName="ios-star"
+                    onPress={() => console.log("Favorite pressed")}
+                  />
+                </HeaderButtons>
+              ),
             };
           }}
         />
