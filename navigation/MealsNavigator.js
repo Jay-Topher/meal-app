@@ -79,27 +79,6 @@ function MealsNavigator() {
   );
 }
 
-// export default MealsNavigator;
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function HomeStackScreen() {
-  return (
-    <View>
-      <Text style={{ textAlign: "center", marginTop: 300 }}>Home Screen</Text>
-    </View>
-  );
-}
-
-function SettingsStackScreen() {
-  return (
-    <View>
-      <Text style={{ textAlign: "center", marginTop: 300 }}>
-        Settings Screen
-      </Text>
-    </View>
-  );
-}
-
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
