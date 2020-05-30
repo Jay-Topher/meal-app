@@ -3,6 +3,7 @@ import { Platform, View, Text } from "react-native";
 import "react-native-gesture-handler";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { Ionicons } from "@expo/vector-icons";
@@ -79,7 +80,30 @@ function MealsNavigator() {
   );
 }
 
-const Tab = createBottomTabNavigator();
+const FavoritesStack = createStackNavigator();
+
+const FavoritesNavigator = () => {
+  return (
+    <FavoritesStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor:
+            Platform.OS === "android" ? Colors.primaryColor : "#fff",
+        },
+        headerTintColor: Platform.OS === "ios" ? Colors.primaryColor : "#fff",
+        headerTitle: "Your Favorites",
+      }}
+    >
+      <FavoritesStack.Screen name="Favorites" component={FavoritesScreen} />
+      <FavoritesStack.Screen name="MealDetails" component={MealDetailScreen} />
+    </FavoritesStack.Navigator>
+  );
+};
+
+const Tab =
+  Platform.OS === "android"
+    ? createMaterialBottomTabNavigator()
+    : createBottomTabNavigator();
 
 function MyTabs() {
   return (
@@ -97,14 +121,22 @@ function MyTabs() {
             return <Ionicons name={iconName} size={25} color={tabInfo.color} />;
           },
         })}
+        activeColor="white"
+        shifting={true}
       >
-        <Tab.Screen name="Meals" component={MealsNavigator} />
-        {/*<Tab.Screen name="Home" component={HomeStackScreen} />*/}
+        <Tab.Screen
+          name="Meals"
+          component={MealsNavigator}
+          options={{
+            tabBarColor: Colors.primaryColor,
+          }}
+        />
         <Tab.Screen
           name="Favorites"
-          component={FavoritesScreen}
+          component={FavoritesNavigator}
           options={{
             tabBarLabel: "Favorites!",
+            tabBarColor: Colors.accentColor,
             // tabBarIcon: (tabInfo) => {
             //   return (
             //     <Ionicons name="ios-heart" size={25} color={tabInfo.color} />
