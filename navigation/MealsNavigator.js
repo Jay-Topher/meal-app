@@ -4,6 +4,7 @@ import "react-native-gesture-handler";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { Ionicons } from "@expo/vector-icons";
@@ -13,6 +14,7 @@ import CategoriesScreen from "../screens/CategoriesScreen";
 import CategoryMealsScreen from "../screens/CategoryMealsScreen";
 import MealDetailScreen from "../screens/MealDetailScreen";
 import FavoritesScreen from "../screens/FavoritesScreen";
+import FiltersScreen from "../screens/FiltersScreen";
 import Colors from "../constants/Colors";
 import { CATEGORIES, MEALS } from "../data/dummy-data";
 
@@ -100,6 +102,16 @@ const FavoritesNavigator = () => {
   );
 };
 
+const FilterStack = createStackNavigator();
+
+const FilterNavigator = () => {
+  return (
+    <FilterStack.Navigator>
+      <FilterStack.Screen name="Filter" component={FiltersScreen} />
+    </FilterStack.Navigator>
+  );
+};
+
 const Tab =
   Platform.OS === "android"
     ? createMaterialBottomTabNavigator()
@@ -107,46 +119,57 @@ const Tab =
 
 function MyTabs() {
   return (
+    <Tab.Navigator
+      tabBarOptions={{ activeTintColor: Colors.accentColor }}
+      screenOptions={({ route }) => ({
+        tabBarIcon: (tabInfo) => {
+          let iconName;
+          if (route.name === "Meals") {
+            iconName = "ios-restaurant";
+          } else if (route.name === "Favorites") {
+            iconName = "ios-star";
+          }
+          return <Ionicons name={iconName} size={25} color={tabInfo.color} />;
+        },
+      })}
+      activeColor="white"
+      shifting={true}
+    >
+      <Tab.Screen
+        name="Meals"
+        component={MealsNavigator}
+        options={{
+          tabBarColor: Colors.primaryColor,
+        }}
+      />
+      <Tab.Screen
+        name="Favorites"
+        component={FavoritesNavigator}
+        options={{
+          tabBarLabel: "Favorites!",
+          tabBarColor: Colors.accentColor,
+          // tabBarIcon: (tabInfo) => {
+          //   return (
+          //     <Ionicons name="ios-heart" size={25} color={tabInfo.color} />
+          //   );
+          // },
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
+
+const MainNavigator = createDrawerNavigator();
+
+function MyDrawer() {
+  return (
     <NavigationContainer>
-      <Tab.Navigator
-        tabBarOptions={{ activeTintColor: Colors.accentColor }}
-        screenOptions={({ route }) => ({
-          tabBarIcon: (tabInfo) => {
-            let iconName;
-            if (route.name === "Meals") {
-              iconName = "ios-restaurant";
-            } else if (route.name === "Favorites") {
-              iconName = "ios-star";
-            }
-            return <Ionicons name={iconName} size={25} color={tabInfo.color} />;
-          },
-        })}
-        activeColor="white"
-        shifting={true}
-      >
-        <Tab.Screen
-          name="Meals"
-          component={MealsNavigator}
-          options={{
-            tabBarColor: Colors.primaryColor,
-          }}
-        />
-        <Tab.Screen
-          name="Favorites"
-          component={FavoritesNavigator}
-          options={{
-            tabBarLabel: "Favorites!",
-            tabBarColor: Colors.accentColor,
-            // tabBarIcon: (tabInfo) => {
-            //   return (
-            //     <Ionicons name="ios-heart" size={25} color={tabInfo.color} />
-            //   );
-            // },
-          }}
-        />
-      </Tab.Navigator>
+      <MainNavigator.Navigator>
+        <MainNavigator.Screen name="MealsFavs" component={MyTabs} />
+        <MainNavigator.Screen name="Filters" component={FilterNavigator} />
+      </MainNavigator.Navigator>
     </NavigationContainer>
   );
 }
 
-export default MyTabs;
+export default MyDrawer;
