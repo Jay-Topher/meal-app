@@ -168,7 +168,7 @@ const FilterNavigator = () => {
       <FilterStack.Screen
         name="Filter"
         component={FiltersScreen}
-        options={({ navigation }) => {
+        options={({ navigation, route }) => {
           return {
             headerTitle: "Filter Meals",
             headerStyle: {
@@ -184,6 +184,15 @@ const FilterNavigator = () => {
                     navigation.toggleDrawer();
                   }}
                   color="#000000"
+                />
+              </HeaderButtons>
+            ),
+            headerRight: () => (
+              <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                <Item
+                  title="Save"
+                  iconName="ios-save"
+                  onPress={route.params.save}
                 />
               </HeaderButtons>
             ),
