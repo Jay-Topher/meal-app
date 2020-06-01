@@ -183,7 +183,6 @@ const FilterNavigator = () => {
                   onPress={() => {
                     navigation.toggleDrawer();
                   }}
-                  color="#000000"
                 />
               </HeaderButtons>
             ),
@@ -192,7 +191,7 @@ const FilterNavigator = () => {
                 <Item
                   title="Save"
                   iconName="ios-save"
-                  onPress={route.params.save}
+                  onPress={() => route.params?.save()}
                 />
               </HeaderButtons>
             ),
