@@ -80,17 +80,16 @@ function MealsNavigator() {
         name="MealDetails"
         component={MealDetailScreen}
         options={({ route }) => {
-          const mealId = route.params.mealId;
-          const selectedMeal = MEALS.find((meal) => meal.id === mealId);
+          const { mealTitle, toggleFav, isFav: isFavorite } = route.params;
 
           return {
-            title: selectedMeal.title,
+            title: mealTitle,
             headerRight: () => (
               <HeaderButtons HeaderButtonComponent={HeaderButton}>
                 <Item
                   title="Favorite"
-                  iconName="ios-star"
-                  onPress={() => console.log("Favorite pressed")}
+                  iconName={isFavorite ? "ios-star" : "ios-star-outline"}
+                  onPress={toggleFav}
                 />
               </HeaderButtons>
             ),
@@ -140,7 +139,26 @@ const FavoritesNavigator = () => {
           };
         }}
       />
-      <FavoritesStack.Screen name="MealDetails" component={MealDetailScreen} />
+      <FavoritesStack.Screen
+        name="MealDetails"
+        component={MealDetailScreen}
+        options={({ route }) => {
+          const { mealTitle, toggleFav, isFav: isFavorite } = route.params;
+
+          return {
+            title: mealTitle,
+            headerRight: () => (
+              <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                <Item
+                  title="Favorite"
+                  iconName={isFavorite ? "ios-star" : "ios-star-outline"}
+                  onPress={toggleFav}
+                />
+              </HeaderButtons>
+            ),
+          };
+        }}
+      />
     </FavoritesStack.Navigator>
   );
 };
